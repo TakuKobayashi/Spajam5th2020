@@ -30,6 +30,17 @@ const serverlessConfiguration: Serverless = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: [
+          {
+            s3: "*",
+          }
+        ],
+        Resource: "arn:aws:s3:::taptappun/*"
+      }
+    ]
   },
   functions: {
     app: {
