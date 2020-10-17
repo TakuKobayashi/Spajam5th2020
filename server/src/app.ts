@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cors({ origin: true }));
 
 app.get('/', async (req: express.Request, res: express.Response) => {
-  const response = await axios.get('https://mov.20th-meijiyasuda-kazumasaoda.jp/upload/jKhEd__2FlIZtUrQVTzXrTfxg__3D__3D/out.mp4', {
+  const response = await axios.get('https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/a13f5814-a81a-4a78-9141-7de186e412f6.mp4', {
     responseType: 'arraybuffer',
   });
   const filename = uuid();
