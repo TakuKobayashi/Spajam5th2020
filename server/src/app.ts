@@ -31,10 +31,12 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   const filename = uuid();
   fs.writeFileSync('/tmp/' + filename + '.mp4', res.data);
   const command = ffmpeg('/tmp/' + filename + '.mp4');
-  command.screenshots({folder: '/tmp/', filename: 'test.png'});
-  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".png", Body: fs.readFileSync("/tmp/test.png"), ACL: 'public-read'}).promise()
+  command..on('end', function() {
+    console.log('Screenshots taken');
+    const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".png", Body: fs.readFileSync("/tmp/test.png"), ACL: 'public-read'}).promise()
+    console.log(putResponse);
+  }).screenshots({folder: '/tmp/', filename: 'test.png'});
 //  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
-  console.log(putResponse);
   res.json({ hello: 'world' });
 });
 
