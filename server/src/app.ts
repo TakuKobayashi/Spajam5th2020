@@ -30,7 +30,10 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   const response = await axios.get("https://mov.20th-meijiyasuda-kazumasaoda.jp/upload/jKhEd__2FlIZtUrQVTzXrTfxg__3D__3D/out.mp4", {responseType: 'arraybuffer'});
   const filename = uuid();
   fs.writeFileSync('/tmp/' + filename + '.mp4', res.data);
-  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
+  const command = ffmpeg('/tmp/' + filename + '.mp4');
+  command.screenshots({folder: '/tmp/', filename: 'test.png'});
+  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".png", Body: fs.readFileSync("/tmp/test.png"), ACL: 'public-read'}).promise()
+//  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
   console.log(putResponse);
   res.json({ hello: 'world' });
 });
