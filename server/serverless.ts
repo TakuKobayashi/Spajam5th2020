@@ -8,7 +8,7 @@ const serverlessConfiguration: Serverless = {
   custom: {
     webpack: {
       webpackConfig: './webpack.config.js',
-      includeModules: true
+      includeModules: true,
     },
   },
   // Add the serverless-webpack plugin
@@ -45,6 +45,11 @@ const serverlessConfiguration: Serverless = {
       ],
     },
   },
-}
+  layers: {
+    ffmpeg: {
+      path: 'layer',
+    },
+  },
+};
 
 module.exports = serverlessConfiguration;
