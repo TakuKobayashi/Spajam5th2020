@@ -12,10 +12,7 @@ const serverlessConfiguration: Serverless = {
     },
     dotenv: {
       path: './.env',
-      include: [
-        'FFMPEG_PATH',
-        'FFPROBE_PATH',
-      ],
+      include: ['FFMPEG_PATH', 'FFPROBE_PATH'],
     },
   },
   // Add the serverless-webpack plugin
@@ -32,13 +29,11 @@ const serverlessConfiguration: Serverless = {
     },
     iamRoleStatements: [
       {
-        Effect: "Allow",
-        Action: [
-          "s3:*",
-        ],
-        Resource: "arn:aws:s3:::taptappun/*"
-      }
-    ]
+        Effect: 'Allow',
+        Action: ['s3:*'],
+        Resource: 'arn:aws:s3:::taptappun/*',
+      },
+    ],
   },
   functions: {
     app: {
