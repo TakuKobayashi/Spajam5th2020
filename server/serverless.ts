@@ -34,9 +34,7 @@ const serverlessConfiguration: Serverless = {
       {
         Effect: "Allow",
         Action: [
-          {
-            s3: "*",
-          }
+          "s3:*",
         ],
         Resource: "arn:aws:s3:::taptappun/*"
       }
