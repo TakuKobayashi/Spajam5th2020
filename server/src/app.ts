@@ -4,6 +4,9 @@ import { APIGatewayEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import * as awsServerlessExpress from 'aws-serverless-express';
 import * as express from 'express';
 
+const ffmpeg = require('fluent-ffmpeg');
+const command = ffmpeg();
+
 const app = express();
 const server = awsServerlessExpress.createServer(app);
 const cors = require('cors');

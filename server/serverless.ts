@@ -10,6 +10,13 @@ const serverlessConfiguration: Serverless = {
       webpackConfig: './webpack.config.js',
       includeModules: true,
     },
+    dotenv: {
+      path: './.env',
+      include: [
+        'FFMPEG_PATH',
+        'FFPROBE_PATH',
+      ],
+    },
   },
   // Add the serverless-webpack plugin
   plugins: ['serverless-webpack', 'serverless-dotenv-plugin', 'serverless-offline'],
