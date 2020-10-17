@@ -19,6 +19,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Register firebaseConfig.json
+      working-directory: ./server
+      env:
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+      run: |
+        echo "${FIREBASE_CONFIG}" >> ./firebaseConfig.json
     - name: yarn install
       working-directory: ./server
       run: yarn install
