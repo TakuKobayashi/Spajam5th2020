@@ -20,6 +20,10 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.json({ hello: 'world' });
 });
 
+app.post('/video/generate', (req: express.Request, res: express.Response) => {
+  res.json({ success: true, video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
+})
+
 app.get('/video/show', (req: express.Request, res: express.Response) => {
   res.json({ video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
 })
