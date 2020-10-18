@@ -36,7 +36,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   command
     .output('/tmp/sample.mp4')
     .noAudio()
-    .on('end', function() {
+    .on('end', async function() {
       const putResponse = await s3
         .putObject({
           Bucket: 'taptappun',
