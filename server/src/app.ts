@@ -75,9 +75,12 @@ app.get('/google/auth', (req: express.Request, res: express.Response) => {
 });
 
 app.get('/google/oauth/callback', async (req: express.Request, res: express.Response) => {
+  oauth2Client.on('tokens', (ontokens) => {
+    console.log("-------------------------------");
+    console.log(ontokens);
+  });
   const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
-  const responseMedias = await loadPhotos(tokens.access_token)
   res.json({...req.query, ...tokens});
 });
 
@@ -87,8 +90,8 @@ async function loadPhotos(accessToken: string){
   const requests = [];
   for(const mediaItem of photosResponse.mediaItems) {
     const response = await axios.get(mediaItem.baseUrl, {responseType: 'arraybuffer'});
-    //fs.writeFileSync(mediaItem.filename, response.data);
-    fs.writeFileSync('/tmp/' + mediaItem.filename, response.data);
+    fs.writeFileSync(mediaItem.filename, reponse.data);
+    //fs.writeFileSync('/tmp/' + mediaItem.filename, response.data);
   }
 
   return photosResponse.mediaItems;
@@ -106,8 +109,7 @@ app.post('/video/generate', (req: express.Request, res: express.Response) => {
   res.json({ success: true, video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
 });
 
-app.get('/video/show', async (req: express.Request, res: express.Response) => {
-  const responseMedias = await loadPhotos("ya29.a0AfH6SMCCmjCV9Q53MY0IB3UWmgH6dncSaOxAv6VI6Vp7Xz2aq_k-u1ayhpNBhPy2NuPeA4Dt7I-Byhl0rU_sGJvVWwivJ9i9LV93DWFeBeS7_V3LUV6oVXufLVsHwU2tiNyXadGh_Vu8-iG8c49HmDHkRBzVTpFFN7s")
+app.get('/video/show', (req: express.Request, res: express.Response) => {
   res.json({ video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
 });
 
