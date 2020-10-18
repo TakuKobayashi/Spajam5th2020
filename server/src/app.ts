@@ -5,6 +5,8 @@ import * as awsServerlessExpress from 'aws-serverless-express';
 import * as express from 'express';
 import axios from 'axios';
 
+const { google } = require('googleapis');
+
 const fs = require('fs');
 
 const { v4: uuid } = require('uuid');
@@ -50,6 +52,10 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
   //  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
   res.json({ hello: 'world' });
+});
+
+app.get('/google/auth', (req: express.Request, res: express.Response) => {
+  res.json({ success: true, video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
 });
 
 app.post('/video/generate', (req: express.Request, res: express.Response) => {
