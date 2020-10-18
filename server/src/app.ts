@@ -78,7 +78,7 @@ app.get('/google/oauth/callback', async (req: express.Request, res: express.Resp
   const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
   oauth2Client.on('tokens', (ontokens) => {
-    console.log(ontokens.access_token);
+    console.log(ontokens);
     oauth2Client.setCredentials(ontokens);
     res.json({...req.query, ...ontokens});
   }); 
