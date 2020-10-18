@@ -34,19 +34,20 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   fs.writeFileSync('/tmp/' + filename + '.mp4', res.data);
   const command = ffmpeg('/tmp/' + filename + '.mp4');
   command
-    .on('end', async function () {
-      console.log('Screenshots taken');
+    .output('/tmp/sample.mp4')
+    .noAudio()
+    .on('end', function() {
       const putResponse = await s3
         .putObject({
           Bucket: 'taptappun',
           Key: 'project/spajam5th2020/' + filename + '.png',
-          Body: fs.readFileSync('/tmp/test.png'),
+          Body: fs.readFileSync('/tmp/sample.mp4'),
           ACL: 'public-read',
         })
         .promise();
-      console.log(putResponse);
     })
-    .screenshots({ folder: '/tmp/', filename: 'test.png' });
+    .run();
+
   //  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
   res.json({ hello: 'world' });
 });
