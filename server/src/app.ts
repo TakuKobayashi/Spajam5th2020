@@ -6,6 +6,14 @@ import * as express from 'express';
 import axios from 'axios';
 
 const { google } = require('googleapis');
+const Photos = require('googlephotos');
+
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_OAUTH_CLIENT_ID,
+  process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+  //"https://localhost:3000/dev/google/oauth/callback"
+  "https://2wvmez8c6g.execute-api.ap-northeast-1.amazonaws.com/production/google/oauth/callback"
+);
 
 const fs = require('fs');
 
@@ -55,7 +63,19 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/google/auth', (req: express.Request, res: express.Response) => {
-  res.json({ success: true, video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
+  const scopes = [
+    Photos.Scopes.READ_ONLY,
+    Photos.Scopes.SHARING,
+  ];
+  const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scopes
+  });
+  res.redirect(url);
+});
+
+app.get('/google/oauth/callback', (req: express.Request, res: express.Response) => {
+  res.json(req.query);
 });
 
 app.post('/video/generate', (req: express.Request, res: express.Response) => {

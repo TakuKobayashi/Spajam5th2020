@@ -12,7 +12,7 @@ const serverlessConfiguration: Serverless = {
     },
     dotenv: {
       path: './.env',
-      include: ['FFMPEG_PATH', 'FFPROBE_PATH'],
+      include: ['FFMPEG_PATH', 'FFPROBE_PATH', 'GOOGLE_OAUTH_CLIENT_ID', 'GOOGLE_OAUTH_CLIENT_SECRET'],
     },
   },
   // Add the serverless-webpack plugin
