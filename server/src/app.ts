@@ -75,13 +75,13 @@ app.get('/google/auth', (req: express.Request, res: express.Response) => {
 });
 
 app.get('/google/oauth/callback', async (req: express.Request, res: express.Response) => {
+  oauth2Client.on('tokens', (ontokens) => {
+    console.log("-------------------------------");
+    console.log(ontokens);
+  });
   const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
-  oauth2Client.on('tokens', (ontokens) => {
-    console.log(ontokens);
-    oauth2Client.setCredentials(ontokens);
-    res.json({...req.query, ...ontokens});
-  }); 
+  res.json({...req.query, ...ontokens});
 });
 
 app.post('/video/generate', (req: express.Request, res: express.Response) => {
