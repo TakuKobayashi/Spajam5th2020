@@ -42,16 +42,16 @@ app.get('/', async (req: express.Request, res: express.Response) => {
       const putResponse = await s3
         .putObject({
           Bucket: 'taptappun',
-          Key: 'project/spajam5th2020/' + filename + '.png',
+          Key: 'project/spajam5th2020/' + filename + '.mp4',
           Body: fs.readFileSync('/tmp/sample.mp4'),
           ACL: 'public-read',
         })
         .promise();
+        res.json({ hello: 'world' });
     })
     .run();
 
   //  const putResponse = await s3.putObject({Bucket: "taptappun", Key: "project/spajam5th2020/" + filename + ".mp4", Body: response.data, ACL: 'public-read'}).promise()
-  res.json({ hello: 'world' });
 });
 
 app.get('/google/auth', (req: express.Request, res: express.Response) => {
