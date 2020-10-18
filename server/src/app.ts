@@ -81,7 +81,7 @@ app.get('/google/oauth/callback', async (req: express.Request, res: express.Resp
   });
   const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
-  res.json({...req.query, ...ontokens});
+  res.json({...req.query, ...tokens});
 });
 
 app.post('/video/generate', (req: express.Request, res: express.Response) => {
