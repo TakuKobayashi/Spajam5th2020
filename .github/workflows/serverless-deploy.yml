@@ -19,6 +19,18 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Register .env
+      working-directory: ./server
+      env:
+        FFMPEG_PATH: ${{ secrets.FFMPEG_PATH }}
+        FFPROBE_PATH: ${{ secrets.FFPROBE_PATH }}
+        GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+        GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+      run: |
+        echo "FFMPEG_PATH=${FFMPEG_PATH}" >> ./.env
+        echo "FFPROBE_PATH=${FFPROBE_PATH}" >> ./.env
+        echo "GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}" >> ./.env
+        echo "GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}" >> ./.env
     - name: Register firebaseConfig.json
       working-directory: ./server
       env:
