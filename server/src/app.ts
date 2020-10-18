@@ -3,7 +3,7 @@ import 'source-map-support/register';
 import { APIGatewayEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import * as awsServerlessExpress from 'aws-serverless-express';
 import * as express from 'express';
-import axios from 'axios';
+const axios = require('axios');
 
 const { google } = require('googleapis');
 const Photos = require('googlephotos');
@@ -83,6 +83,27 @@ app.get('/google/oauth/callback', async (req: express.Request, res: express.Resp
   console.log(tokens);
   res.json({...req.query, ...tokens});
 });
+
+async function loadPhotos(accessToken: string){
+  const photos = new Photos(accessToken);
+  const photosResponse = await photos.transport.get("v1/mediaItems", {pageSize: 10})
+  const requests = [];
+  for(const mediaItem of photosResponse.mediaItems) {
+    const response = await axios.get(mediaItem.baseUrl, {responseType: 'arraybuffer'});
+    fs.writeFileSync(mediaItem.filename, reponse.data);
+    //fs.writeFileSync('/tmp/' + mediaItem.filename, response.data);
+  }
+
+  return photosResponse.mediaItems;
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 app.post('/video/generate', (req: express.Request, res: express.Response) => {
   res.json({ success: true, video_url: 'https://taptappun.s3-ap-northeast-1.amazonaws.com/project/spajam5th2020/sample.mp4' });
