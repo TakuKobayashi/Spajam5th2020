@@ -1,4 +1,5 @@
 import type { Serverless } from 'serverless/aws';
+const dotenvConfig = require("dotenv").config()
 
 const serverlessConfiguration: Serverless = {
   service: {
@@ -12,7 +13,7 @@ const serverlessConfiguration: Serverless = {
     },
     dotenv: {
       path: './.env',
-      include: ['FFMPEG_PATH', 'FFPROBE_PATH', 'GOOGLE_OAUTH_CLIENT_ID', 'GOOGLE_OAUTH_CLIENT_SECRET'],
+      include: Object.keys(dotenvConfig.parsed),
     },
   },
   // Add the serverless-webpack plugin
